@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.MedicineMapper">
+
+    <select id="getMedicine" resultType="com.neutech.bean.base.Medicine">
+        select * from medicine where med_ID=#{med_ID}
+    </select>
+
+    <select id="addMedicine" parameterType="com.neutech.bean.base.Medicine">
+        INSERT INTO medicine VALUES(#{med_ID},#{med_Name},#{med_Spec},#{med_Un},#{med_Manu},#{med_Type},#{med_UnitPrice},#{med_Kind},#{med_State})
+    </select>
+
+    <select id="getMedicineBy" resultType="com.neutech.bean.base.Medicine">
+        select * from medicine where 1=1
+        <if test="med_Name != null and med_Name !=''">
+            and med_Name=#{med_Name}
+        </if>
+    </select>
+
+    <update id="updateMedicine">
+        update medicine
+        <set>
+            <if test="med_Name != null">
+                med_Name=#{med_Name},
+            </if>
+            <if test="med_Spec != null">
+                med_Spec=#{med_Spec},
+            </if>
+            <if test="med_Un != null">
+                med_Un=#{med_Un},
+            </if>
+            <if test="med_Manu != null">
+                med_Manu=#{med_Manu},
+            </if>
+            <if test="med_Type != null">
+                med_Type=#{med_Type},
+            </if>
+            <if test="med_UnitPrice != null">
+                med_UnitPrice=#{med_UnitPrice},
+            </if>
+            <if test="med_Kind != null">
+                med_Kind=#{med_Kind},
+            </if>
+            <if test="med_State != null">
+                med_State=#{med_State}
+            </if>
+        </set>
+        where med_ID=#{med_ID}
+    </update>
+
+    <select id="getByName" resultType="com.neutech.bean.base.Medicine">
+        select * from medicine
+        <where>
+            <if test="med_Name != null">
+                and med_Name like "%"#{med_Name,jdbcType=VARCHAR}"%"
+            </if>
+        </where>
+    </select>
+</mapper>

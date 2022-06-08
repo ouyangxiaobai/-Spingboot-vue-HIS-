@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.DepMapper">
+
+    <!--    public DepMapper getDep(String depNum);-->
+    <select id="getDep" resultType="com.neutech.bean.base.DepMana">
+        select * from depmana where depNum=#{depNum}
+    </select>
+
+
+    <!--    public void addDep(DepMana depMana);-->
+    <select id="addDep" parameterType="com.neutech.bean.base.DepMana">
+        INSERT INTO depmana VALUES (#{depNum},#{depName},#{depType})
+    </select>
+
+    <!--    public List<DepMana> getDepBy(DepMana depMana);-->
+    <select id="getDepBy" resultType="com.neutech.bean.base.DepMana">
+        select * from depmana where 1=1
+        <if test="depNum !=null and depNum !=''">
+            and depNum=#{depNum}
+        </if>
+        <if test="depName != null and depName !=''">
+            and depName=#{depName}
+        </if>
+        <if test="depType != null and depType !=''">
+            and depType=#{depType}
+        </if>
+    </select>
+
+    <!--    public boolean updateDep(DepMana depMana);-->
+    <update id="updateDep">
+        update depmana
+        <set>
+            <if test="depName != null">
+                depName=#{depName},
+            </if>
+            <if test="depType != null">
+                depType=#{depType},
+            </if>
+        </set>
+        where depNum=#{depNum}
+    </update>
+
+</mapper>

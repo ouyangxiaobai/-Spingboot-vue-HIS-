@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.PatientMapper">
+
+    <select id="getPatient" resultType="com.neutech.bean.patient.Patient">
+        select * from patient where patient_ID=#{patient_ID}
+    </select>
+
+
+   <select id="addPatient" parameterType="com.neutech.bean.patient.Patient">
+        INSERT INTO patient VALUES (#{patient_ID},#{patient_Name},#{patient_Sex},#{patient_Age},#{patient_IdNum},#{patient_DataBirth},#{patient_Address})
+    </select>
+
+    <select id="getPatientBy" resultType="com.neutech.bean.patient.Patient">
+        select * from patient where 1=1
+        <if test="patient_Name != null and patient_Name !=''">
+            and patient_Name=#{patient_Name}
+        </if>
+    </select>
+
+
+    <update id="updatePatient">
+        update patient
+        <set>
+            <if test="patient_Name != null">
+                patient_Name=#{patient_Name},
+            </if>
+            <if test="patient_Sex != null">
+                patient_Sex=#{patient_Sex},
+            </if>
+            <if test="patient_Age != null">
+                patient_Age=#{patient_Age},
+            </if>
+            <if test="patient_IdNum != null">
+                patient_IdNum=#{patient_IdNum},
+            </if>
+            <if test="patient_DataBirth != null">
+                patient_DataBirth=#{patient_DataBirth},
+            </if>
+            <if test="patient_Address != null">
+                patient_Address=#{patient_Address},
+            </if>
+        </set>
+        where patient_ID=#{patient_ID}
+    </update>
+
+    <select id="getByPatient" resultType="com.neutech.bean.patient.Patient">
+        select * from patient where 1=1
+        <if test="patient_ID !=null and patient_ID !=''">
+            and patient_ID=#{patient_ID}
+        </if>
+        <if test="patient_Name != null and patient_Name !=''">
+            and patient_Name=#{patient_Name}
+        </if>
+        <if test="patient_IdNum != null and patient_IdNum !=''">
+            and patient_IdNum=#{patient_IdNum}
+        </if>
+    </select>
+
+    <select id="getRegByDocPat" resultType="com.neutech.vo.outdepart.PatientShow">
+        select * from patientreg,patient where 1=1 and reg_optDoc=#{reg_optDoc} and reg_State=#{reg_State} and patientreg.reg_Patient=patient.patient_ID
+        <if test="patient_Name != null and patient_Name!=''">
+            and patient_Name=#{patient_Name}
+        </if>
+    </select>
+
+</mapper>

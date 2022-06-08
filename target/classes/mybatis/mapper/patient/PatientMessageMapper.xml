@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.PatientMessageMapper">
+
+    <update id="updateMessage" parameterType="com.neutech.bean.patient.PatientMessage">
+        update patientmessage
+        <set>
+            <if test="pm_Jieguo != null">
+                pm_Jieguo=#{pm_Jieguo},
+            </if>
+            <if test="pm_Yijian != null">
+                pm_Yijian=#{pm_Yijian},
+            </if>
+        </set>
+        where pm_ID=#{pm_ID}
+    </update>
+
+    <insert id="addMessage" parameterType="com.neutech.bean.patient.PatientMessage">
+        INSERT INTO patientmessage VALUES (#{pm_ID},#{pm_Jieguo},#{pm_Yijian})
+    </insert>
+
+
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.PatientregMapper">
+
+    <select id="getPatientreg" resultType="com.neutech.bean.patient.Patientreg">
+        select * from patientreg where reg_ID=#{reg_ID}
+    </select>
+
+
+    <select id="addPatientreg" parameterType="com.neutech.bean.patient.Patientreg">
+        INSERT INTO patientreg VALUES (#{reg_ID},#{reg_Patient},#{reg_State},#{reg_Depart},#{reg_Type},#{reg_optDoc},#{reg_billNum},#{reg_Date},#{reg_Sn})
+    </select>
+
+    <select id="getPatientregBy" resultType="com.neutech.bean.patient.Patientreg">
+        select * from patientreg where 1=1
+        <if test="reg_Patient != null and reg_Patient !=''">
+            and reg_Patient=#{reg_Patient}
+        </if>
+    </select>
+
+
+    <update id="updatePatientreg">
+        update patientreg
+        <set>
+            <if test="reg_Patient != null">
+                reg_Patient=#{reg_Patient},
+            </if>
+            <if test="reg_State != null">
+                reg_State=#{reg_State},
+            </if>
+            <if test="reg_Depart != null">
+                reg_Depart=#{reg_Depart},
+            </if>
+            <if test="reg_Type != null">
+                reg_Type=#{reg_Type},
+            </if>
+            <if test="reg_optDoc != null">
+                reg_optDoc=#{reg_optDoc},
+            </if>
+            <if test="reg_billNum != null">
+                reg_billNum=#{reg_billNum},
+            </if>
+            <if test="reg_Date != null">
+                reg_Date=#{reg_Date},
+            </if>
+            <if test="reg_Sn != null">
+                reg_Sn=#{reg_Sn},
+            </if>
+        </set>
+        where reg_ID=#{reg_ID}
+    </update>
+
+    <select id="getByidTime" resultType="com.neutech.bean.patient.Patientreg">
+        select * from patientreg where reg_optDoc = #{docID} AND TO_DAYS(reg_Date) = TO_DAYS(NOW())
+    </select>
+
+    <select id="getRegByDocPat" resultType="com.neutech.vo.outdepart.PatientShow">
+        select * from patientreg,patient where 1=1 and reg_optDoc=#{reg_optDoc} and reg_State=#{reg_State} and patientreg.reg_Patient=patient.patient_ID
+        <if test="patient_Name != null and patient_Name!=''">
+            and patient_Name=#{patient_Name}
+        </if>
+    </select>
+<!--    @Select("SELECT reg_Sn,patient_name,reg_ID from patientreg,patient where reg_optDoc=#{reg_optDoc}
+and reg_Patient=patient_ID and reg_State=#{reg_State} ")-->
+    <select id="getRegByDoc" resultType="com.neutech.vo.outdepart.PatientShow">
+        select reg_Sn,patient_name,reg_ID from patientreg,patient where reg_optDoc=#{reg_optDoc}
+            and reg_Patient=patient_ID and reg_State=#{reg_State} AND TO_DAYS(reg_Date) = TO_DAYS(NOW())
+    </select>
+
+    <select id="getToday" resultType="com.neutech.bean.patient.Patientreg">
+        select * from patientreg where  TO_DAYS(reg_Date) = TO_DAYS(NOW())
+    </select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.system.UserMapper">
+
+    <!--public User getUser(String username);-->
+    <select id="getUser" resultType="com.neutech.bean.system.User">
+        select * from user where id=#{id}
+    </select>
+
+    <!--public void setUser(User user);-->
+    <select id="addUser" parameterType="com.neutech.bean.system.User">
+        INSERT INTO user VALUES (#{id},#{password},#{name},#{systype},#{hisrank},#{depart},#{regtype})
+    </select>
+
+    <!--&lt;!&ndash;public List<User> getAllUsers();&ndash;&gt;
+    <select id="getAllUsers" parameterType="com.neutech.bean.system.User">
+        select * from user
+    </select>-->
+    <!--public List<User> getUsersBy(User user);-->
+    <select id="getUsersBy" resultType="com.neutech.bean.system.User">
+        select * from user where 1=1
+        <if test="id != null and id !=''">
+            and id = #{id}
+        </if>
+        <if test="name !=null and name !=''">
+            and name =#{name}
+        </if>
+        <if test="systype !=null and systype !=''">
+            and systype =#{systype}
+        </if>
+        <if test="hisrank !=null and hisrank !=''">
+            and hisrank =#{hisrank}
+        </if>
+        <if test="depart !=null and depart !=''">
+            and depart =#{depart}
+        </if>
+    </select>
+
+    <!-- 更新不为空的属性 -->
+    <update id="updateUser">
+        update user
+        <set >
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="systype != null">
+                systype = #{systype},
+            </if>
+            <if test="hisrank != null">
+                hisrank = #{hisrank},
+            </if>
+            <if test="depart != null">
+                depart = #{depart},
+            </if>
+            <if test="regtype != null">
+                regtype = #{regtype},
+            </if>
+        </set>
+         where id = #{id}
+    </update>
+</mapper>

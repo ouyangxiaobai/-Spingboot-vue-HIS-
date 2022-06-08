@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.PrescriptionMapper">
+
+    <select id="getPrescription" resultType="com.neutech.bean.patient.Prescription">
+        select * from prescription where pre_ID=#{pre_ID} and pre_RegID=#{pre_RegID}
+    </select>
+
+
+    <select id="addPrescription" parameterType="com.neutech.bean.patient.Prescription">
+        INSERT INTO prescription VALUES (#{pre_ID},#{pre_RegID},#{pre_Name},#{pre_State},#{pre_Date},#{pre_Usage})
+    </select>
+
+
+    <update id="updatePrescription">
+        update prescription
+        <set>
+            <if test="pre_Name != null">
+                pre_Name=#{pre_Name},
+            </if>
+            <if test="pre_State != null">
+                pre_State=#{pre_State},
+            </if>
+        </set>
+        where pre_ID=#{pre_ID} and pre_RegID=#{pre_RegID}
+    </update>
+
+</mapper>

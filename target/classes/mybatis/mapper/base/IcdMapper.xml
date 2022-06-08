@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.IcdMapper">
+
+    <select id="getIcd" resultType="com.neutech.bean.base.Icd">
+        select * from icd where icd_ID=#{icdID}
+    </select>
+
+    <select id="addIcd" parameterType="com.neutech.bean.base.Icd">
+        INSERT INTO icd VALUES (#{icdID},#{icdName},#{icdType})
+    </select>
+
+    <select id="getIcdBy" resultType="com.neutech.bean.base.Icd">
+        select * from icd where 1=1
+        <if test="icdId != null and icdId !=''">
+            and icd_ID=#{icdID}
+        </if>
+        <if test="icdName != null and icdName !=''">
+            and icd_Name=#{icdName}
+        </if>
+        <if test="icdType != null and icdType !=''">
+            and icd_Type=#{icdType}
+        </if>
+    </select>
+
+    <update id="updateIcd">
+        update icd
+        <set>
+            <if test="icdName != null">
+                icd_Name=#{icdName},
+            </if>
+            <if test="icdType != null">
+                icd_Type=#{icdType},
+            </if>
+        </set>
+        where icd_ID=#{icdID}
+    </update>
+</mapper>

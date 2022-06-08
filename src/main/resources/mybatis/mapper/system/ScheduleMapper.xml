@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.system.ScheduleMapper">
+
+    <resultMap id="sche" type="com.neutech.bean.system.Schedule">
+        <id column="schedule_UepNum" property="uepNum"></id>
+        <id column="schedule_UserID" property="userID"></id>
+        <collection property="list" ofType="com.neutech.bean.system.SchedChildren">
+            <id column="schedule_Time" property="time"></id>
+            <result column="schedule_Number" property="number"></result>
+            <result column="schedule_Max" property="max"></result>
+            <result column="schedule_LastTime" property="lastTime"></result>
+<!--            <result column="schedule_LastTime" property="lastTime"></result>-->
+        </collection>
+    </resultMap>
+    <select id="getAll" resultMap="sche">
+        SELECT * from schedule
+    </select>
+
+    <select id="getByID" resultMap="sche">
+        SELECT * from schedule where schedule_UserID=#{id}
+    </select>
+
+    <select id="getByDepID" resultMap="sche">
+        SELECT * from schedule where schedule_UepNum=#{depID}
+    </select>
+
+    <insert id="add">
+        INSERT INTO schedule(schedule_UepNum,schedule_UserID,schedule_Time,schedule_Number,schedule_Max,schedule_LastTime)
+        VALUES (#{schedule_UepNum},#{schedule_UserID},#{schedule_Time},#{schedule_Number},#{schedule_Max},#{schedule_LastTime})
+    </insert>
+
+</mapper>

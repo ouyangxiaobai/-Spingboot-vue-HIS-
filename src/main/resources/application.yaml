@@ -1,0 +1,7 @@
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml,classpath:mybatis/mapper/system/*.xml,classpath:mybatis/mapper/base/*.xml,classpath:mybatis/mapper/patient/*.xml
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/his
+    username: root
+    password: 123456

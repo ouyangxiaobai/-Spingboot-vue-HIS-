@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.FirstpageMapper">
+
+    <select id="getFpage" resultType="com.neutech.bean.patient.FirstPage">
+        select * from firstpage where ft_ID=#{ft_ID}
+    </select>
+
+
+    <!--    public void addDep(DepMana depMana);-->
+    <select id="addFpage" parameterType="com.neutech.bean.patient.FirstPage">
+        INSERT INTO firstpage VALUES (#{ft_ID},#{ft_MainSuit},#{ft_PreMedHis},#{ft_PreMedHisCureSitu},#{ft_PastHis},#{ft_IrriHis},#{ft_PhyExam},#{ft_PreDiag},#{ft_ExamSugg})
+    </select>
+
+    <update id="updateFpage">
+        update firstpage
+        <set>
+            <if test="ft_MainSuit != null">
+                ft_MainSuit=#{ft_MainSuit},
+            </if>
+            <if test="ft_PreMedHis != null">
+                ft_PreMedHis=#{ft_PreMedHis},
+            </if>
+            <if test="ft_PreMedHisCureSitu != null">
+                ft_PreMedHisCureSitu=#{ft_PreMedHisCureSitu},
+            </if>
+            <if test="ft_PastHis != null">
+                ft_PastHis=#{ft_PastHis},
+            </if>
+            <if test="ft_IrriHis != null">
+                ft_IrriHis=#{ft_IrriHis},
+            </if>
+            <if test="ft_PhyExam != null">
+                ft_PhyExam=#{ft_PhyExam},
+            </if>
+            <if test="ft_PreDiag != null">
+                ft_PreDiag=#{ft_PreDiag},
+            </if>
+            <if test="ft_ExamSugg != null">
+                ft_ExamSugg=#{ft_ExamSugg},
+            </if>
+        </set>
+        where ft_ID=#{ft_ID}
+    </update>
+</mapper>

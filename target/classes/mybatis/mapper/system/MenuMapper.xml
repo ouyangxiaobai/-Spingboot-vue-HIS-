@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.system.MenuMapper">
+
+    <select id="getMenus" resultMap= "menuMap">
+        SELECT mm.* ,sm.id as sid ,sm.title as stitle , sm.path as spath FROM mainmenu mm ,submenu sm WHERE mm.id = sm.mid;
+    </select>
+    <resultMap id="menuMap" type="com.neutech.bean.system.MainMenu">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <collection property="sList" ofType="com.neutech.bean.system.SubMenu">
+            <id column="sid" property="id"></id>
+            <result column="stitle" property="title"></result>
+            <result column="spath" property="path"></result>
+        </collection>
+    </resultMap>
+</mapper>

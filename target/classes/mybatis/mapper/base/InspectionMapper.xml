@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.InspectionMapper">
+
+<!--    public Check getCheck(String check_RegID, String check_TechID);-->
+    <select id="getInspection" resultType="com.neutech.bean.base.Inspection">
+        select * from inspection where check_RegID=#{check_RegID} AND check_TechID=#{check_TechID}
+    </select>
+
+<!--    public void addCheck(Check inspection);-->
+    <select id="addInspection" parameterType="com.neutech.bean.base.Inspection">
+        INSERT INTO inspection VALUES (#{check_RegID},#{check_TechID},#{check_State},#{check_Num},#{check_Time})
+    </select>
+
+<!--    public List<Check> getCheckBy(Check inspection);-->
+    <select id="getInspectionBy" resultType="com.neutech.bean.base.Inspection">
+        select * from inspection where 1=1
+        <if test="check_RegID != null and check_RegID !=''">
+            and check_RegID=#{check_RegID}
+        </if>
+        <if test="check_TechID !=null and check_TechID !=''">
+            and check_TechID=#{check_TechID}
+        </if>
+        <if test="check_State != null and check_State !=''">
+            and check_State=#{check_State}
+        </if>
+        <if test="check_Num != null and check_num!=''">
+            and check_Num=#{check_Num}
+        </if>
+        <if test="check_Time != null and check_Time !=''">
+            and check_Time=#{check_Time}
+        </if>
+    </select>
+
+<!--    public boolean updateCheck(Check inspection);-->
+    <update id="updateInspection">
+        update inspection
+        <set>
+            <if test="check_State != null">
+                check_State=#{check_State},
+            </if>
+            <if test="check_Num != null">
+                check_Num=#{check_Num},
+            </if>
+            <if test="check_Time != null">
+                check_Time=#{check_Time},
+            </if>
+        </set>
+        where check_RegID=#{check_RegID} and check_TechID=#{check_TechID}
+    </update>
+
+    <update id="updateState">
+        update inspection
+        <set>
+            <if test="check_State != null">
+                check_State=#{check_State},
+            </if>
+        </set>
+        where check_RegID=#{check_RegID} and check_TechID=#{check_TechID}
+    </update>
+</mapper>

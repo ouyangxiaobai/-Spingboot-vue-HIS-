@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.TechMapper">
+
+    <!--    public TechMana getTech(String techMana);-->
+    <select id="getTech" resultType="com.neutech.bean.base.TechMana">
+        select * from techMana where techNum=#{techNum}
+    </select>
+
+    <select id="addTech" parameterType="com.neutech.bean.base.TechMana">
+        INSERT INTO techMana VALUES (#{techNum},#{techItem},#{techType},#{techExeOff},#{techUnitPrice})
+    </select>
+
+    <!--    <select id="getTechBy" resultType="com.neutech.bean.base.TechMana">-->
+    <!--        select * from techmana where 1=1-->
+    <!--        <if test="techNum !=null and techNum !=''">-->
+    <!--            and techNum=#{techNum}-->
+    <!--        </if>-->
+    <!--    </select>-->
+
+    <update id="updateTech">
+        update techmana
+        <set>
+            <if test="techItem != null">
+                techItem=#{techItem},
+            </if>
+            <if test="techType != null">
+                techType=#{techType},
+            </if>
+            <if test="techExeOff != null">
+                techExeOff=#{techExeOff},
+            </if>
+            <if test="techUnitPrice != null">
+                techUnitPrice=#{techUnitPrice},
+            </if>
+        </set>
+        where techNum=#{techNum}
+    </update>
+
+    <select id="getTechBy" resultType="com.neutech.bean.base.TechMana">
+        select * from techmana where 1 = 1
+        <if test="techItem != null and techItem !='' ">
+            and techItem =#{techItem}
+        </if>
+    </select>
+
+</mapper>

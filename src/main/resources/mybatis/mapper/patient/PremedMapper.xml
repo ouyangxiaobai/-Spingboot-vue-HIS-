@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.patient.PremedMapper">
+
+    <select id="getPremed" resultType="com.neutech.bean.patient.Premed">
+        select * from premed where pm_PreID=#{pm_PreID} and pm_MedID=#{pm_MedID}
+    </select>
+
+
+    <select id="addPremed" parameterType="com.neutech.bean.patient.Premed">
+        INSERT INTO premed VALUES (#{pm_PreID},#{pm_MedID},#{pm_Num},#{pm_Method},#{pm_Frequency},#{pm_State})
+    </select>
+
+
+    <update id="updatePremed">
+        update premed
+        <set>
+            <if test="pm_Num != null">
+                pm_Num=#{pm_Num},
+            </if>
+            <if test="pm_Method != null">
+                pm_Method=#{pm_Method},
+            </if>
+            <if test="pm_Frequency != null">
+                pm_Frequency=#{pm_Frequency},
+            </if>
+            <if test="pm_State != null">
+                pm_State=#{pm_State},
+            </if>
+        </set>
+        where pm_PreID=#{pm_PreID} and pm_MedID=#{pm_MedID}
+    </update>
+
+    <update id="updateState">
+        update premed
+        <set>
+            <if test="pm_State != null">
+                pm_State=#{pm_State},
+            </if>
+        </set>
+        where pm_PreID=#{pm_PreID} and pm_MedID=#{pm_MedID}
+    </update>
+
+    <update id="updateMZState">
+        update premed
+        <set>
+            <if test="pm_State != null">
+                pm_State=#{pm_State},
+            </if>
+        </set>
+        where pm_PreID=#{pm_PreID}
+    </update>
+
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutech.mapper.base.DispositionMapper">
+
+    <select id="getDis" resultType="com.neutech.bean.base.Disposition">
+        select * from disposition where dis_RegID=#{dis_RegID} and dis_TechID=#{dis_TechID}
+    </select>
+
+    <select id="addDis" resultType="com.neutech.bean.base.Disposition">
+        INSERT INTO disposition VALUES(#{dis_RegID},#{dis_TechID},#{dis_State},#{dis_Num},#{dis_Time})
+    </select>
+
+    <select id="getDisBy" resultType="com.neutech.bean.base.Disposition">
+        select * from disposition where 1=1
+        <if test="dis_RegID != null and dis_RegID !=''">
+            and dis_RegID=#{dis_RegID}
+        </if>
+        <if test="dis_TechID != null and dis_TechID!=''">
+            and dis_TechID=#{dis_TechID}
+        </if>
+        <if test="dis_State != null and dis_State !=''">
+            and dis_State=#{dis_State}
+        </if>
+        <if test="dis_Num != null and dis_Num !=''">
+            and dis_Num=#{dis_Num}
+        </if>
+        <if test="dis_Time != null and dis_Time !=''">
+            and dis_Time=#{dis_Time}
+        </if>
+    </select>
+
+    <update id="updateDis">
+        update disposition
+        <set>
+            <if test="dis_State != null">
+                dis_State=#{dis_State},
+            </if>
+            <if test="dis_Num != null">
+                dis_Num=#{dis_Num},
+            </if>
+            <if test="dis_Time != null">
+                dis_Time=#{dis_Time},
+            </if>
+            where dis_RegID=#{dis_RegID} and dis_TechID={dis_TechID}
+        </set>
+    </update>
+
+</mapper>
